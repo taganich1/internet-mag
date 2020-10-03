@@ -12,7 +12,7 @@ gulp.task('scss', function(){
     return gulp.src('app/scss/**/*.scss')
             .pipe(scss({outputStyle: 'compressed'}))
             .pipe(autoprefixer({
-                browsers: ['last 2 versions'],
+                overrideBrowserslist: ['last 8 versions'],
             }))
             .pipe(rename({suffix:'.min'}))
             .pipe(gulp.dest('app/css/style.min.css'))
