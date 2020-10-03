@@ -11,8 +11,9 @@ const autoPrefixer = require('gulp-autoprefixer');
 gulp.task('scss', function(){
     return gulp.src('app/scss/**/*.scss')
             .pipe(scss({outputStyle: 'compressed'}))
-            .pipe(autoprefixer({
-                OverrideBrowserslist: ['last 8 versions'],
+            .pipe(
+                autoprefixer({
+                overrideBrowserslist: ['last 8 versions'],
             }))
             .pipe(rename({suffix:'.min'}))
             .pipe(gulp.dest('app/css/style.min.css'))
@@ -38,11 +39,12 @@ gulp.task('browser-sync', function(){
 });
 
 gulp.task('js', function(){
-    return gulp.src(['app/libs/slick-carousel/slick/slick.js',
-        'app/libs/magnific-popup/dist/jquery.magnific-popup.js'])
-            .pipe(concat('libs.min.js'))
-            .pipe(uglifyjs())
-            .pipe(gulp.dest('app/js'))
+    return gulp.src(['node_modules/@fancyapps/fancybox/dist/jquery.fancybox.js',
+        'node_modules/slick-carousel/slick/slick.js',
+            'node_modules/mixitup/dist/mixitup.js'])
+                .pipe(concat('libs.min.js'))
+                .pipe(uglifyjs())
+                .pipe(gulp.dest('app/js'))
 })
 
 gulp.task('watch', function(){
