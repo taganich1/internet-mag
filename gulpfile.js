@@ -11,8 +11,7 @@ const autoPrefixer = require('gulp-autoprefixer');
 gulp.task('scss', function(){
     return gulp.src('app/scss/**/*.scss')
             .pipe(scss({outputStyle: 'compressed'}))
-            .pipe(
-                autoprefixer({
+            .pipe(autoprefixer({
                 overrideBrowserslist: ['last 8 versions'],
             }))
             .pipe(rename({suffix:'.min'}))
