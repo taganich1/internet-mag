@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var gulp = require('gulp'),
     scss = require('gulp-sass'),
     browserSync = require('browser-sync');
@@ -52,4 +53,60 @@ gulp.task('watch', function(){
     gulp.watch('app/*.html', gulp.parallel('code'))
 });
 
+=======
+var gulp = require('gulp'),
+    scss = require('gulp-sass'),
+    browserSync = require('browser-sync');
+const autoPrefixer = require('gulp-autoprefixer');
+    uglifyjs = require('gulp-uglifyjs'),
+    concat = require('gulp-concat'),
+    rename = require('gulp-rename'),
+    autoprefixer = require('gulp-autoprefixer')
+
+
+gulp.task('scss', function(){
+    return gulp.src('app/scss/**/*.scss')
+            .pipe(scss({outputStyle: 'compressed'}))
+            .pipe(autoprefixer({
+                overrideBrowserslist: ['last 8 versions'],
+            }))
+            .pipe(rename({suffix:'.min'}))
+            .pipe(gulp.dest('app/css/style.min.css'))
+            .pipe(browserSync.reload({stream: true}))
+});
+
+gulp.task('script', function(){
+    return gulp.src('app/js/**/*.js')
+            .pipe(browserSync.reload({stream: true}))
+});
+
+gulp.task('code', function(){
+    return gulp.src('app/*.html')
+            .pipe(browserSync.reload({stream: true}))
+});
+
+gulp.task('browser-sync', function(){
+    browserSync.init({
+        server : {
+            baseDir: "app"
+        }
+    })
+});
+
+gulp.task('js', function(){
+    return gulp.src(['node_modules/@fancyapps/fancybox/dist/jquery.fancybox.js',
+        'node_modules/slick-carousel/slick/slick.js',
+            'node_modules/mixitup/dist/mixitup.js'])
+                .pipe(concat('libs.min.js'))
+                .pipe(uglifyjs())
+                .pipe(gulp.dest('app/js'))
+})
+
+gulp.task('watch', function(){
+    gulp.watch('app/scss/**/*.scss', gulp.parallel('scss'))
+    gulp.watch('app/js/**/*.js', gulp.parallel('script'))
+    gulp.watch('app/*.html', gulp.parallel('code'))
+});
+
+>>>>>>> b72c9d449e357f86b1f1e399dd1da8f5436791f8
 gulp.task('default', gulp.parallel('scss', 'browser-sync', 'watch'));
